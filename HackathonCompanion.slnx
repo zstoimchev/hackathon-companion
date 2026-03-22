@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="HackathonOS.API/HackathonOS.API.csproj" />
+  <Project Path="HackathonOS.Application/HackathonOS.Application.csproj" />
+  <Project Path="HackathonOS.Domain/HackathonOS.Domain.csproj" />
+  <Project Path="HackathonOS.Infrastructure/HackathonOS.Infrastructure.csproj" />
+  <Project Path="HackathonOS.Tests/HackathonOS.Tests.csproj" />
+</Solution>
