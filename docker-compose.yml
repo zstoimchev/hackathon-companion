@@ -18,8 +18,8 @@ services:
 
   api:
     build:
-      context: .
-      dockerfile: src/HackathonOS.Api/Dockerfile
+      context: ./backend
+      dockerfile: HackathonOS.API/Dockerfile
     restart: unless-stopped
     depends_on:
       db:
@@ -27,8 +27,8 @@ services:
     environment:
       ConnectionStrings__DefaultConnection: "Host=db;Port=5432;Database=hackathon_os;Username=hackathon_os;Password=hackathon_os"
       Jwt__Secret: "CHANGE_ME_IN_PRODUCTION_use_at_least_32_characters_long_secret_key"
-      Jwt__Issuer: "hackathon-os"
-      Jwt__Audience: "hackathon-os"
+      Jwt__Issuer: "hackathon-companion"
+      Jwt__Audience: "hackathon-companion"
       Jwt__ExpiryHours: "24"
       AllowedOrigins__0: "http://localhost:3000"
       ASPNETCORE_ENVIRONMENT: "Production"
