@@ -1,0 +1,52 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: hackathon_os
+      POSTGRES_USER: hackathon_os
+      POSTGRES_PASSWORD: hackathon_os
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hackathon_os"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: src/HackathonOS.Api/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ConnectionStrings__DefaultConnection: "Host=db;Port=5432;Database=hackathon_os;Username=hackathon_os;Password=hackathon_os"
+      Jwt__Secret: "CHANGE_ME_IN_PRODUCTION_use_at_least_32_characters_long_secret_key"
+      Jwt__Issuer: "hackathon-os"
+      Jwt__Audience: "hackathon-os"
+      Jwt__ExpiryHours: "24"
+      AllowedOrigins__0: "http://localhost:3000"
+      ASPNETCORE_ENVIRONMENT: "Production"
+    ports:
+      - "5000:8080"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - api
+    environment:
+      NEXT_PUBLIC_API_URL: "http://localhost:5000"
+    ports:
+      - "3000:3000"
+
+volumes:
+  pg_data:
+
