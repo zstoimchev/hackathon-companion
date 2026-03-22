@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using HackathonOS.Domain.Enums;
 
 namespace HackathonOS.Domain.Entities;

@@ -1,5 +1,3 @@
-using System;
-
 namespace HackathonOS.Application.DTOs.Events;
 
 public record CreateEventRequest(

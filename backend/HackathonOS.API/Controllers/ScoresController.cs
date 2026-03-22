@@ -1,13 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.Security.Claims;
-using System.Threading;
-using System.Threading.Tasks;
 using HackathonOS.Application.DTOs.Results;
 using HackathonOS.Application.DTOs.Scores;
 using HackathonOS.Application.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HackathonOS.Api.Controllers;

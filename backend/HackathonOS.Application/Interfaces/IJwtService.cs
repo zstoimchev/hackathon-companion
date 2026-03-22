@@ -1,5 +1,3 @@
-using System;
-
 namespace HackathonOS.Application.Interfaces;
 
 public interface IJwtService

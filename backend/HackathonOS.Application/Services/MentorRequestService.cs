@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using HackathonOS.Application.DTOs.MentorRequests;
 using HackathonOS.Application.Interfaces;
 using HackathonOS.Domain.Entities;

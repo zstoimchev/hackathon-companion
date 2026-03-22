@@ -1,5 +1,3 @@
-using System;
-
 namespace HackathonOS.Application.DTOs.Scores;
 
 public record SubmitScoreRequest(

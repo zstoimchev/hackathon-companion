@@ -1,4 +1,3 @@
-using System;
 using HackathonOS.Domain.Enums;
 
 namespace HackathonOS.Domain.Entities;

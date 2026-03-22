@@ -1,5 +1,3 @@
-using System;
-
 namespace HackathonOS.Domain.Entities;
 
 public abstract class BaseEntity

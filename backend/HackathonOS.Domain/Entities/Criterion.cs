@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace HackathonOS.Domain.Entities;
 
 public class Criterion : BaseEntity

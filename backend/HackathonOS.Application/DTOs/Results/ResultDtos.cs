@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace HackathonOS.Application.DTOs.Results;
 
 public record TeamResult(

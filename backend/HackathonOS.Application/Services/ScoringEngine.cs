@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using HackathonOS.Application.DTOs.Results;
 using HackathonOS.Domain.Entities;
 
