@@ -1,6 +1,5 @@
 using HackathonOS.Application.DTOs.Criteria;
 using HackathonOS.Application.Services;
-using HackathonOS.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

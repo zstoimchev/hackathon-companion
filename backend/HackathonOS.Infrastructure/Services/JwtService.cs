@@ -1,11 +1,11 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using HackathonOS.Application.Services;
+using HackathonOS.Application.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace HackathonOS.Services;
+namespace HackathonOS.Infrastructure.Services;
 
 public class JwtService : IJwtService
 {
