@@ -4,7 +4,7 @@ using HackathonOS.Application.Services;
 using HackathonOS.Domain.Entities;
 using HackathonOS.Infrastructure.Data;
 using HackathonOS.Infrastructure.Repositories;
-using HackathonOS.Infrastructure.Services;
+using HackathonOS.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -29,7 +29,7 @@ builder.Services.AddScoped<IRepository<Criterion>, Repository<Criterion>>();
 
 // ─── Application Services ────────────────────────────────────────────────────
 builder.Services.AddScoped<IJwtService, JwtService>();
-builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<EventService>();
 builder.Services.AddScoped<TeamService>();
 builder.Services.AddScoped<CriterionService>();

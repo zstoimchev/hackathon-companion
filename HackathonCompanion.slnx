@@ -5,4 +5,5 @@
   <Project Path="backend/HackathonOS.Domain/HackathonOS.Domain.csproj" />
   <Project Path="backend/HackathonOS.Infrastructure/HackathonOS.Infrastructure.csproj" />
   <Project Path="backend/HackathonOS.Tests/HackathonOS.Tests.csproj" />
+  <Project Path="backend/HackathonOS.Services/HackathonOS.Services.csproj" />
 </Solution>
