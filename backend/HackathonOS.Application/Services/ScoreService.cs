@@ -41,7 +41,7 @@ public class ScoreService
         {
             existing.Value = request.Value;
             existing.Comment = request.Comment;
-            existing.UpdatedAt = DateTime.UtcNow;
+            existing.UpdatedOnUtc = DateTime.UtcNow;
             _scores.Update(existing);
             await _scores.SaveChangesAsync(ct);
             return MapToResponse(existing, "Updated", team.Name, criterion.Name);
@@ -65,7 +65,7 @@ public class ScoreService
     {
         var scores = await _scores.GetByJudgeAndEventAsync(judgeId, eventId, ct);
         return scores.Select(s => MapToResponse(s,
-            s.Judge?.Name ?? string.Empty,
+            s.Judge?.FirstName ?? string.Empty,
             s.Team?.Name ?? string.Empty,
             s.Criterion?.Name ?? string.Empty));
     }
@@ -85,6 +85,6 @@ public class ScoreService
     }
 
     private static ScoreResponse MapToResponse(Score s, string judgeName, string teamName, string criterionName) => new(
-        s.Id, s.JudgeId, judgeName, s.TeamId, teamName, s.CriterionId, criterionName,
-        s.Value, s.Comment, s.CreatedAt);
+        s.Guid, s.JudgeId, judgeName, s.TeamId, teamName, s.CriterionId, criterionName,
+        s.Value, s.Comment, s.CreatedOnUtc);
 }

@@ -4,11 +4,17 @@ using HackathonOS.Application.Services;
 using HackathonOS.Domain.Entities;
 using HackathonOS.Infrastructure.Data;
 using HackathonOS.Infrastructure.Repositories;
-using HackathonOS.Infrastructure.Services;
+using HackathonOS.Services;
+using HackathonOS.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using AuthService = HackathonOS.Application.Services.AuthService;
+using EventService = HackathonOS.Application.Services.EventService;
+using IJwtService = HackathonOS.Application.Interfaces.IJwtService;
+using JwtService = HackathonOS.Infrastructure.Services.JwtService;
+using TeamService = HackathonOS.Application.Services.TeamService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +41,10 @@ builder.Services.AddScoped<TeamService>();
 builder.Services.AddScoped<CriterionService>();
 builder.Services.AddScoped<ScoreService>();
 builder.Services.AddScoped<MentorRequestService>();
+
+// -- Services
+builder.Services.AddTransient<IUserService, UserService>();
+
 
 // ─── JWT Authentication ───────────────────────────────────────────────────────
 var jwtSecret = builder.Configuration["Jwt:Secret"]

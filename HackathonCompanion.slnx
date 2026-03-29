@@ -3,5 +3,7 @@
   <Project Path="backend/HackathonOS.Application/HackathonOS.Application.csproj" />
   <Project Path="backend/HackathonOS.Domain/HackathonOS.Domain.csproj" />
   <Project Path="backend/HackathonOS.Infrastructure/HackathonOS.Infrastructure.csproj" />
+  <Project Path="backend/HackathonOS.Repositories/HackathonOS.Repositories.csproj" />
+  <Project Path="backend/HackathonOS.Services/HackathonOS.Services.csproj" />
   <Project Path="backend/HackathonOS.Tests/HackathonOS.Tests.csproj" />
 </Solution>

@@ -27,7 +27,7 @@ public class AuthService
         var user = new User
         {
             Email = request.Email.ToLowerInvariant(),
-            Name = request.Name,
+            FirstName = request.Name,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
             Role = role
         };
@@ -35,8 +35,8 @@ public class AuthService
         await _users.AddAsync(user, ct);
         await _users.SaveChangesAsync(ct);
 
-        var token = _jwt.GenerateToken(user.Id, user.Email, user.Role.ToString());
-        return new AuthResponse(token, user.Id, user.Email, user.Name, user.Role.ToString());
+        var token = _jwt.GenerateToken(user.Guid, user.Email, user.Role.ToString());
+        return new AuthResponse(token, user.Guid, user.Email, user.FirstName, user.Role.ToString());
     }
 
     public async Task<AuthResponse> LoginAsync(LoginRequest request, CancellationToken ct = default)
@@ -50,7 +50,7 @@ public class AuthService
         if (!user.IsActive)
             throw new UnauthorizedAccessException("Account is disabled.");
 
-        var token = _jwt.GenerateToken(user.Id, user.Email, user.Role.ToString());
-        return new AuthResponse(token, user.Id, user.Email, user.Name, user.Role.ToString());
+        var token = _jwt.GenerateToken(user.Guid, user.Email, user.Role.ToString());
+        return new AuthResponse(token, user.Guid, user.Email, user.FirstName, user.Role.ToString());
     }
 }

@@ -16,7 +16,7 @@ public class EventRepository : Repository<Event>, IEventRepository
             .Include(e => e.EventJudges).ThenInclude(ej => ej.Judge)
             .Include(e => e.EventMentors).ThenInclude(em => em.Mentor)
             .Include(e => e.MentorRequests)
-            .FirstOrDefaultAsync(e => e.Id == id, ct);
+            .FirstOrDefaultAsync(e => e.Guid == id, ct);
 
     public async Task<IEnumerable<Event>> GetActiveEventsAsync(CancellationToken ct = default)
         => await _db.Events

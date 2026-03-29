@@ -26,14 +26,14 @@ public static class ScoringEngine
         if (scores.Count == 0)
         {
             return new EventResultsResponse(
-                evt.Id, evt.Name, evt.LeaderboardVisible,
+                evt.Guid, evt.Name, evt.LeaderboardVisible,
                 Array.Empty<TeamResult>());
         }
 
         // Build lookup maps
-        var criteriaById = evt.Criteria.ToDictionary(c => c.Id);
+        var criteriaById = evt.Criteria.ToDictionary(c => c.Guid);
         var judgeWeights = eventJudges.ToDictionary(ej => ej.JudgeId, ej => ej.Weight);
-        var teamsById = evt.Teams.ToDictionary(t => t.Id);
+        var teamsById = evt.Teams.ToDictionary(t => t.Guid);
 
         // Step 1: Compute per-judge statistics
         var judgeScoreGroups = scores
@@ -106,13 +106,13 @@ public static class ScoringEngine
                     {
                         double avgRaw = 0;
                         if (teamCriterionRaw.TryGetValue(teamId, out var byCrit) &&
-                            byCrit.TryGetValue(c.Id, out var rawList) &&
+                            byCrit.TryGetValue(c.Guid, out var rawList) &&
                             rawList.Count > 0)
                         {
                             avgRaw = rawList.Average();
                         }
                         return new CriterionBreakdown(
-                            c.Id, c.Name, c.Weight, avgRaw, avgRaw * c.Weight);
+                            c.Guid, c.Name, c.Weight, avgRaw, avgRaw * c.Weight);
                     })
                     .OrderByDescending(b => b.Weight)
                     .ToList();
@@ -127,6 +127,6 @@ public static class ScoringEngine
             })
             .ToList();
 
-        return new EventResultsResponse(evt.Id, evt.Name, evt.LeaderboardVisible, rankings);
+        return new EventResultsResponse(evt.Guid, evt.Name, evt.LeaderboardVisible, rankings);
     }
 }

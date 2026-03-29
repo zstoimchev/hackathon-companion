@@ -54,7 +54,7 @@ public class CriterionService
         criterion.Name = request.Name;
         criterion.Description = request.Description;
         criterion.Weight = request.Weight;
-        criterion.UpdatedAt = DateTime.UtcNow;
+        criterion.UpdatedOnUtc = DateTime.UtcNow;
 
         _criteria.Update(criterion);
         await _criteria.SaveChangesAsync(ct);
@@ -70,5 +70,5 @@ public class CriterionService
     }
 
     private static CriterionResponse MapToResponse(Criterion c) => new(
-        c.Id, c.EventId, c.Name, c.Description, c.Weight, c.CreatedAt);
+        c.Guid, c.EventId, c.Name, c.Description, c.Weight, c.CreatedOnUtc);
 }

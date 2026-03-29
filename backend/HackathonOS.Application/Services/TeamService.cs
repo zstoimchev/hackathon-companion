@@ -58,7 +58,7 @@ public class TeamService
         team.DemoUrl = request.DemoUrl;
         team.Description = request.Description;
         team.MemberCount = request.MemberCount;
-        team.UpdatedAt = DateTime.UtcNow;
+        team.UpdatedOnUtc = DateTime.UtcNow;
 
         _teams.Update(team);
         await _teams.SaveChangesAsync(ct);
@@ -74,8 +74,8 @@ public class TeamService
     }
 
     private static TeamResponse MapToResponse(Team t) => new(
-        t.Id, t.EventId, t.Name,
+        t.Guid, t.EventId, t.Name,
         t.RepoUrl, t.DemoUrl,
         t.Description, t.MemberCount,
-        t.CreatedAt);
+        t.CreatedOnUtc);
 }

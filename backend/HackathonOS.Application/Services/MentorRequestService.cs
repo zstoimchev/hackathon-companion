@@ -70,7 +70,7 @@ public class MentorRequestService
         req.AssignedMentorId = mentorId;
         req.Status = MentorRequestStatus.Assigned;
         req.AssignedAt = DateTime.UtcNow;
-        req.UpdatedAt = DateTime.UtcNow;
+        req.UpdatedOnUtc = DateTime.UtcNow;
 
         _requests.Update(req);
         await _requests.SaveChangesAsync(ct);
@@ -85,7 +85,7 @@ public class MentorRequestService
         req.Status = status;
         if (status == MentorRequestStatus.Done)
             req.CompletedAt = DateTime.UtcNow;
-        req.UpdatedAt = DateTime.UtcNow;
+        req.UpdatedOnUtc = DateTime.UtcNow;
 
         _requests.Update(req);
         await _requests.SaveChangesAsync(ct);
@@ -98,16 +98,16 @@ public class MentorRequestService
         if (r.AssignedMentorId.HasValue)
         {
             var mentor = await _users.GetByIdAsync(r.AssignedMentorId.Value, ct);
-            mentorName = mentor?.Name;
+            mentorName = mentor?.FirstName;
         }
 
         // Load team name if not navigation-loaded
         string teamName = r.Team?.Name ?? string.Empty;
 
         return new MentorRequestResponse(
-            r.Id, r.EventId, r.TeamId, teamName,
+            r.Guid, r.EventId, r.TeamId, teamName,
             r.AssignedMentorId, mentorName,
             r.Topic, r.Description, r.Status, r.Priority,
-            r.CreatedAt, r.AssignedAt, r.CompletedAt);
+            r.CreatedOnUtc, r.AssignedAt, r.CompletedAt);
     }
 }
