@@ -22,7 +22,7 @@ namespace HackathonOS.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("HackathonOS.Domain.Entities.Criterion", b =>
+            modelBuilder.Entity("OLD.HackathonOS.Domain.Entities.Criterion", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -55,7 +55,7 @@ namespace HackathonOS.Infrastructure.Migrations
                     b.ToTable("Criteria");
                 });
 
-            modelBuilder.Entity("HackathonOS.Domain.Entities.Event", b =>
+            modelBuilder.Entity("OLD.HackathonOS.Domain.Entities.Event", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -93,7 +93,7 @@ namespace HackathonOS.Infrastructure.Migrations
                     b.ToTable("Events");
                 });
 
-            modelBuilder.Entity("HackathonOS.Domain.Entities.EventJudge", b =>
+            modelBuilder.Entity("OLD.HackathonOS.Domain.Entities.EventJudge", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -124,7 +124,7 @@ namespace HackathonOS.Infrastructure.Migrations
                     b.ToTable("EventJudges");
                 });
 
-            modelBuilder.Entity("HackathonOS.Domain.Entities.EventMentor", b =>
+            modelBuilder.Entity("OLD.HackathonOS.Domain.Entities.EventMentor", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -159,7 +159,7 @@ namespace HackathonOS.Infrastructure.Migrations
                     b.ToTable("EventMentors");
                 });
 
-            modelBuilder.Entity("HackathonOS.Domain.Entities.MentorRequest", b =>
+            modelBuilder.Entity("OLD.HackathonOS.Domain.Entities.MentorRequest", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -212,7 +212,7 @@ namespace HackathonOS.Infrastructure.Migrations
                     b.ToTable("MentorRequests");
                 });
 
-            modelBuilder.Entity("HackathonOS.Domain.Entities.Score", b =>
+            modelBuilder.Entity("OLD.HackathonOS.Domain.Entities.Score", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -251,7 +251,7 @@ namespace HackathonOS.Infrastructure.Migrations
                     b.ToTable("Scores");
                 });
 
-            modelBuilder.Entity("HackathonOS.Domain.Entities.Team", b =>
+            modelBuilder.Entity("OLD.HackathonOS.Domain.Entities.Team", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -290,7 +290,7 @@ namespace HackathonOS.Infrastructure.Migrations
                     b.ToTable("Teams");
                 });
 
-            modelBuilder.Entity("HackathonOS.Domain.Entities.User", b =>
+            modelBuilder.Entity("OLD.HackathonOS.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -331,9 +331,9 @@ namespace HackathonOS.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("HackathonOS.Domain.Entities.Criterion", b =>
+            modelBuilder.Entity("OLD.HackathonOS.Domain.Entities.Criterion", b =>
                 {
-                    b.HasOne("HackathonOS.Domain.Entities.Event", "Event")
+                    b.HasOne("OLD.HackathonOS.Domain.Entities.Event", "Event")
                         .WithMany("Criteria")
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -342,15 +342,15 @@ namespace HackathonOS.Infrastructure.Migrations
                     b.Navigation("Event");
                 });
 
-            modelBuilder.Entity("HackathonOS.Domain.Entities.EventJudge", b =>
+            modelBuilder.Entity("OLD.HackathonOS.Domain.Entities.EventJudge", b =>
                 {
-                    b.HasOne("HackathonOS.Domain.Entities.Event", "Event")
+                    b.HasOne("OLD.HackathonOS.Domain.Entities.Event", "Event")
                         .WithMany("EventJudges")
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HackathonOS.Domain.Entities.User", "Judge")
+                    b.HasOne("OLD.HackathonOS.Domain.Entities.User", "Judge")
                         .WithMany("EventJudges")
                         .HasForeignKey("JudgeId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -361,15 +361,15 @@ namespace HackathonOS.Infrastructure.Migrations
                     b.Navigation("Judge");
                 });
 
-            modelBuilder.Entity("HackathonOS.Domain.Entities.EventMentor", b =>
+            modelBuilder.Entity("OLD.HackathonOS.Domain.Entities.EventMentor", b =>
                 {
-                    b.HasOne("HackathonOS.Domain.Entities.Event", "Event")
+                    b.HasOne("OLD.HackathonOS.Domain.Entities.Event", "Event")
                         .WithMany("EventMentors")
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HackathonOS.Domain.Entities.User", "Mentor")
+                    b.HasOne("OLD.HackathonOS.Domain.Entities.User", "Mentor")
                         .WithMany("EventMentors")
                         .HasForeignKey("MentorId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -380,20 +380,20 @@ namespace HackathonOS.Infrastructure.Migrations
                     b.Navigation("Mentor");
                 });
 
-            modelBuilder.Entity("HackathonOS.Domain.Entities.MentorRequest", b =>
+            modelBuilder.Entity("OLD.HackathonOS.Domain.Entities.MentorRequest", b =>
                 {
-                    b.HasOne("HackathonOS.Domain.Entities.User", "AssignedMentor")
+                    b.HasOne("OLD.HackathonOS.Domain.Entities.User", "AssignedMentor")
                         .WithMany("AssignedRequests")
                         .HasForeignKey("AssignedMentorId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("HackathonOS.Domain.Entities.Event", "Event")
+                    b.HasOne("OLD.HackathonOS.Domain.Entities.Event", "Event")
                         .WithMany("MentorRequests")
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HackathonOS.Domain.Entities.Team", "Team")
+                    b.HasOne("OLD.HackathonOS.Domain.Entities.Team", "Team")
                         .WithMany("MentorRequests")
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -406,21 +406,21 @@ namespace HackathonOS.Infrastructure.Migrations
                     b.Navigation("Team");
                 });
 
-            modelBuilder.Entity("HackathonOS.Domain.Entities.Score", b =>
+            modelBuilder.Entity("OLD.HackathonOS.Domain.Entities.Score", b =>
                 {
-                    b.HasOne("HackathonOS.Domain.Entities.Criterion", "Criterion")
+                    b.HasOne("OLD.HackathonOS.Domain.Entities.Criterion", "Criterion")
                         .WithMany("Scores")
                         .HasForeignKey("CriterionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HackathonOS.Domain.Entities.User", "Judge")
+                    b.HasOne("OLD.HackathonOS.Domain.Entities.User", "Judge")
                         .WithMany("Scores")
                         .HasForeignKey("JudgeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("HackathonOS.Domain.Entities.Team", "Team")
+                    b.HasOne("OLD.HackathonOS.Domain.Entities.Team", "Team")
                         .WithMany("Scores")
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -433,9 +433,9 @@ namespace HackathonOS.Infrastructure.Migrations
                     b.Navigation("Team");
                 });
 
-            modelBuilder.Entity("HackathonOS.Domain.Entities.Team", b =>
+            modelBuilder.Entity("OLD.HackathonOS.Domain.Entities.Team", b =>
                 {
-                    b.HasOne("HackathonOS.Domain.Entities.Event", "Event")
+                    b.HasOne("OLD.HackathonOS.Domain.Entities.Event", "Event")
                         .WithMany("Teams")
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -444,12 +444,12 @@ namespace HackathonOS.Infrastructure.Migrations
                     b.Navigation("Event");
                 });
 
-            modelBuilder.Entity("HackathonOS.Domain.Entities.Criterion", b =>
+            modelBuilder.Entity("OLD.HackathonOS.Domain.Entities.Criterion", b =>
                 {
                     b.Navigation("Scores");
                 });
 
-            modelBuilder.Entity("HackathonOS.Domain.Entities.Event", b =>
+            modelBuilder.Entity("OLD.HackathonOS.Domain.Entities.Event", b =>
                 {
                     b.Navigation("Criteria");
 
@@ -462,14 +462,14 @@ namespace HackathonOS.Infrastructure.Migrations
                     b.Navigation("Teams");
                 });
 
-            modelBuilder.Entity("HackathonOS.Domain.Entities.Team", b =>
+            modelBuilder.Entity("OLD.HackathonOS.Domain.Entities.Team", b =>
                 {
                     b.Navigation("MentorRequests");
 
                     b.Navigation("Scores");
                 });
 
-            modelBuilder.Entity("HackathonOS.Domain.Entities.User", b =>
+            modelBuilder.Entity("OLD.HackathonOS.Domain.Entities.User", b =>
                 {
                     b.Navigation("AssignedRequests");
 

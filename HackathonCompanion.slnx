@@ -1,9 +1,10 @@
 <Solution>
   <Project Path="backend/HackathonOS.API/HackathonOS.API.csproj" />
-  <Project Path="backend/HackathonOS.Application/HackathonOS.Application.csproj" />
   <Project Path="backend/HackathonOS.Domain/HackathonOS.Domain.csproj" />
   <Project Path="backend/HackathonOS.Infrastructure/HackathonOS.Infrastructure.csproj" />
-  <Project Path="backend/HackathonOS.Repositories/HackathonOS.Repositories.csproj" />
-  <Project Path="backend/HackathonOS.Services/HackathonOS.Services.csproj" />
   <Project Path="backend/HackathonOS.Tests/HackathonOS.Tests.csproj" />
+  <Project Path="backend\HackathonOS.Application\HackathonOS.Application.csproj" />
+  <Project Path="backend\HackathonOS.Architecture\HackathonOS.Architecture.csproj" />
+  <Project Path="backend\OLD.HackathonOS.Application\OLD.HackathonOS.Application.csproj" />
+  <Project Path="backend\OLD.HackathonOS.Domain\OLD.HackathonOS.Domain.csproj" />
 </Solution>

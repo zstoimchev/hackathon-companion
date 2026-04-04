@@ -1,6 +1,8 @@
-namespace HackathonOS.Services.Services;
+using HackathonOS.Application.Interfaces;
 
-public class JwtService
+namespace HackathonOS.Application.Services;
+
+public class JwtService : IJwtService
 {
     
 }

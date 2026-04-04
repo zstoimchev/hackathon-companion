@@ -4,10 +4,17 @@
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <RootNamespace>HackathonOS.Repositories</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\HackathonOS.Domain\HackathonOS.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Clients\" />
+      <Folder Include="Persistance\" />
+      <Folder Include="Storage\" />
     </ItemGroup>
 
 </Project>

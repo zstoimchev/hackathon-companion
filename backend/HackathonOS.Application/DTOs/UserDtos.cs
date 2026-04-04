@@ -1,6 +1,6 @@
 using HackathonOS.Domain.Enums;
 
-namespace HackathonOS.Services.DTOs;
+namespace HackathonOS.Application.DTOs;
 
 public record CreateUserRequest(
     string FirstName,

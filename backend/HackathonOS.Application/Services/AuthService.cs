@@ -1,13 +1,23 @@
 using HackathonOS.Application.DTOs;
+using HackathonOS.Application.Interfaces;
+using HackathonOS.Repositories;
 
-public class AuthService
+namespace HackathonOS.Application.Services;
+
+public class AuthService(
+    IUserRepository userRepository,
+    IJwtService jwtService) : IAuthService
 {
-    // private readonly IUserRepository _users;
-    // private readonly IJwtService _jwt;
+    private readonly IUserRepository _userRepository = userRepository;
+    private readonly IJwtService _jwtService = jwtService;
 
-
-    public async Task<AuthResponse> LoginAsync(AuthRequest request, CancellationToken ct = default)
+    public Task<AuthResponse> LoginAsync(AuthRequest authRequest, CancellationToken ct = default)
     {
-        return null;
+        throw new NotImplementedException();
+    }
+
+    public Task LogoutAsync(string token, CancellationToken ct = default)
+    {
+        throw new NotImplementedException();
     }
 }

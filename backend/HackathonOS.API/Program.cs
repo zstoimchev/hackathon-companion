@@ -4,8 +4,6 @@ using HackathonOS.Application.Services;
 using HackathonOS.Domain.Entities;
 using HackathonOS.Infrastructure.Data;
 using HackathonOS.Infrastructure.Repositories;
-using HackathonOS.Services;
-using HackathonOS.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -43,7 +41,6 @@ builder.Services.AddScoped<ScoreService>();
 builder.Services.AddScoped<MentorRequestService>();
 
 // -- Services
-builder.Services.AddTransient<IUserService, UserService>();
 
 
 // ─── JWT Authentication ───────────────────────────────────────────────────────

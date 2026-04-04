@@ -8,11 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\HackathonOS.Domain\HackathonOS.Domain.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="TeamService\" />
-      <Folder Include="UserService\" />
+      <ProjectReference Include="..\HackathonOS.Architecture\HackathonOS.Architecture.csproj" />
     </ItemGroup>
 
 </Project>

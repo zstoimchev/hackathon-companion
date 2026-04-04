@@ -1,4 +1,4 @@
-namespace HackathonOS.Services.DTOs;
+namespace HackathonOS.Application.DTOs;
 
 public record AuthRequest(
     string Email,
