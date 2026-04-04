@@ -2,7 +2,7 @@ using HackathonOS.Application.DTOs;
 using HackathonOS.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HackathonOS.Api.Controllers;
+namespace HackathonOS.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -19,7 +19,7 @@ public class AuthController(AuthService authService) : ControllerBase
             var result = await authService.LoginAsync(request, ct);
             return Ok(result);
         }
-        catch (UnauthorizedAccessException)
+        catch (UnauthorizedAccessException) // TODO: handle this in custom middleware...
         {
             return Unauthorized(new { error = "Invalid credentials." });
         }

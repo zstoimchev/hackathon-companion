@@ -1,13 +1,16 @@
 using System.Text;
 using HackathonOS.Application.Interfaces;
 using HackathonOS.Application.Services;
-using HackathonOS.Domain.Entities;
 using HackathonOS.Infrastructure.UserPersistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
+    loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration));
 
 // ─── Repositories ────────────────────────────────────────────────────────────
 builder.Services.AddTransient<IUserRepository, UserRepositoryClient>();

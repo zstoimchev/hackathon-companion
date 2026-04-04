@@ -4,7 +4,8 @@ namespace HackathonOS.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UsersController : HackathonController
+public class TestController
 {
-    
+    [HttpGet]
+    public string Get() => "Hello World!";
 }
