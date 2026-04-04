@@ -1,0 +1,6 @@
+@HackathonOS.DatabaseAPI_HostAddress = http://localhost:5074
+
+GET {{HackathonOS.DatabaseAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
