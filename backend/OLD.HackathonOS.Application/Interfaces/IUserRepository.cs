@@ -2,8 +2,8 @@ using HackathonOS.Domain.Entities;
 
 namespace HackathonOS.Application.Interfaces;
 
-public interface IUserRepository : IRepository<User>
+public interface IUserRepository : IRepository<Userr>
 {
-    Task<User?> GetByEmailAsync(string email, CancellationToken ct = default);
+    Task<Userr?> GetByEmailAsync(string email, CancellationToken ct = default);
     Task<bool> ExistsByEmailAsync(string email, CancellationToken ct = default);
 }

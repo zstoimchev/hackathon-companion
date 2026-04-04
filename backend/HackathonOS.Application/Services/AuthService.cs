@@ -1,6 +1,6 @@
 using HackathonOS.Application.DTOs;
 using HackathonOS.Application.Interfaces;
-using HackathonOS.Repositories;
+using HackathonOS.Infrastructure.UserPersistence;
 
 namespace HackathonOS.Application.Services;
 

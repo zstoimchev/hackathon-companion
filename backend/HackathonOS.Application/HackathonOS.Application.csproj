@@ -8,7 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\HackathonOS.Domain\HackathonOS.Domain.csproj" />
-      <ProjectReference Include="..\HackathonOS.Architecture\HackathonOS.Architecture.csproj" />
+      <ProjectReference Include="..\HackathonOS.Infrastructure\HackathonOS.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

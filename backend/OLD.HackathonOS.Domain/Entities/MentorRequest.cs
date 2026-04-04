@@ -11,7 +11,7 @@ public class MentorRequest : BaseEntity
     public Team Team { get; set; } = null!;
 
     public Guid? AssignedMentorId { get; set; }
-    public User? AssignedMentor { get; set; }
+    public Userr? AssignedMentor { get; set; }
 
     public string Topic { get; set; } = string.Empty;
     public string? Description { get; set; }

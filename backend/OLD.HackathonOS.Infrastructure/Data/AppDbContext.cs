@@ -7,7 +7,7 @@ public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-    public DbSet<User> Users => Set<User>();
+    public DbSet<Userr> Users => Set<Userr>();
     public DbSet<Event> Events => Set<Event>();
     public DbSet<EventJudge> EventJudges => Set<EventJudge>();
     public DbSet<EventMentor> EventMentors => Set<EventMentor>();
@@ -21,14 +21,14 @@ public class AppDbContext : DbContext
         base.OnModelCreating(mb);
 
         // User
-        mb.Entity<User>(b =>
+        mb.Entity<Userr>(b =>
         {
             b.HasKey(u => u.Guid);
             b.HasIndex(u => u.Email).IsUnique();
             b.Property(u => u.Email).IsRequired().HasMaxLength(256);
             b.Property(u => u.FirstName).IsRequired().HasMaxLength(200);
             b.Property(u => u.PasswordHash).IsRequired();
-            b.Property(u => u.Role).HasConversion<string>();
+            b.Property(u => u.Rolee).HasConversion<string>();
         });
 
         // Event

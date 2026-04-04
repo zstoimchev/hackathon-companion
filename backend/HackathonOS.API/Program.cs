@@ -1,18 +1,7 @@
 using System.Text;
-using HackathonOS.Application.Interfaces;
-using HackathonOS.Application.Services;
-using HackathonOS.Domain.Entities;
-using HackathonOS.Infrastructure.Data;
-using HackathonOS.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using AuthService = HackathonOS.Application.Services.AuthService;
-using EventService = HackathonOS.Application.Services.EventService;
-using IJwtService = HackathonOS.Application.Interfaces.IJwtService;
-using JwtService = HackathonOS.Infrastructure.Services.JwtService;
-using TeamService = HackathonOS.Application.Services.TeamService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,25 +9,24 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' is not configured.");
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(connectionString));
+// builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
 
 // ─── Repositories ────────────────────────────────────────────────────────────
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IEventRepository, EventRepository>();
-builder.Services.AddScoped<IScoreRepository, ScoreRepository>();
-builder.Services.AddScoped<IMentorRequestRepository, MentorRequestRepository>();
-builder.Services.AddScoped<IRepository<Team>, Repository<Team>>();
-builder.Services.AddScoped<IRepository<Criterion>, Repository<Criterion>>();
+// builder.Services.AddScoped<IUserRepository, UserRepository>();
+// builder.Services.AddScoped<IEventRepository, EventRepository>();
+// builder.Services.AddScoped<IScoreRepository, ScoreRepository>();
+// builder.Services.AddScoped<IMentorRequestRepository, MentorRequestRepository>();
+// builder.Services.AddScoped<IRepository<Team>, Repository<Team>>();
+// builder.Services.AddScoped<IRepository<Criterion>, Repository<Criterion>>();
 
 // ─── Application Services ────────────────────────────────────────────────────
-builder.Services.AddScoped<IJwtService, JwtService>();
-builder.Services.AddScoped<AuthService>();
-builder.Services.AddScoped<EventService>();
-builder.Services.AddScoped<TeamService>();
-builder.Services.AddScoped<CriterionService>();
-builder.Services.AddScoped<ScoreService>();
-builder.Services.AddScoped<MentorRequestService>();
+// builder.Services.AddScoped<IJwtService, JwtService>();
+// builder.Services.AddScoped<AuthService>();
+// builder.Services.AddScoped<EventService>();
+// builder.Services.AddScoped<TeamService>();
+// builder.Services.AddScoped<CriterionService>();
+// builder.Services.AddScoped<ScoreService>();
+// builder.Services.AddScoped<MentorRequestService>();
 
 // -- Services
 
@@ -119,10 +107,10 @@ var app = builder.Build();
 
 // ─── Migrate DB on startup ────────────────────────────────────────────────────
 using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate();
-}
+// {
+//     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+//     db.Database.Migrate();
+// }
 
 // ─── Middleware ───────────────────────────────────────────────────────────────
 if (app.Environment.IsDevelopment())
@@ -139,4 +127,4 @@ app.MapControllers();
 
 app.Run();
 
-public partial class Program { }
+internal abstract partial class Program { }

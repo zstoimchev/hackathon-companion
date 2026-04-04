@@ -1,6 +1,6 @@
 namespace HackathonOS.Domain.Enums;
 
-public enum UserRole
+public enum UserRolee
 {
     Admin,
     Judge,

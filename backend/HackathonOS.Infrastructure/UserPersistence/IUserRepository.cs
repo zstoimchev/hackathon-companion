@@ -1,7 +1,7 @@
 using HackathonOS.Domain;
 using HackathonOS.Domain.Entities;
 
-namespace HackathonOS.Repositories;
+namespace HackathonOS.Infrastructure.UserPersistence;
 
 public interface IUserRepository
 {

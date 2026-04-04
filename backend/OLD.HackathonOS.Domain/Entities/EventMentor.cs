@@ -6,7 +6,7 @@ public class EventMentor : BaseEntity
     public Event Event { get; set; } = null!;
 
     public Guid MentorId { get; set; }
-    public User Mentor { get; set; } = null!;
+    public Userr Mentor { get; set; } = null!;
 
     public bool IsAvailable { get; set; } = true;
     public ICollection<string> Expertise { get; set; } = new List<string>();

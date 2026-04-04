@@ -7,14 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\OLD.HackathonOS.Application\OLD.HackathonOS.Application.csproj" />
-      <ProjectReference Include="..\OLD.HackathonOS.Domain\OLD.HackathonOS.Domain.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5" />
-      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.1" />
-      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.16.0" />
+      <ProjectReference Include="..\HackathonOS.Domain\HackathonOS.Domain.csproj" />
     </ItemGroup>
 
 </Project>

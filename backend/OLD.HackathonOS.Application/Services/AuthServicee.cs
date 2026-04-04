@@ -5,12 +5,12 @@ using HackathonOS.Domain.Enums;
 
 namespace HackathonOS.Application.Services;
 
-public class AuthService
+public class AuthServicee
 {
     private readonly IUserRepository _users;
     private readonly IJwtService _jwt;
 
-    public AuthService(IUserRepository users, IJwtService jwt)
+    public AuthServicee(IUserRepository users, IJwtService jwt)
     {
         _users = users;
         _jwt = jwt;
@@ -21,22 +21,22 @@ public class AuthService
         if (await _users.ExistsByEmailAsync(request.Email, ct))
             throw new InvalidOperationException("Email already registered.");
 
-        if (!Enum.TryParse<UserRole>(request.Role, ignoreCase: true, out var role))
+        if (!Enum.TryParse<UserRolee>(request.Role, ignoreCase: true, out var role))
             throw new ArgumentException($"Invalid role: {request.Role}");
 
-        var user = new User
+        var user = new Userr
         {
             Email = request.Email.ToLowerInvariant(),
             FirstName = request.Name,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
-            Role = role
+            Rolee = role
         };
 
         await _users.AddAsync(user, ct);
         await _users.SaveChangesAsync(ct);
 
-        var token = _jwt.GenerateToken(user.Guid, user.Email, user.Role.ToString());
-        return new AuthResponse(token, user.Guid, user.Email, user.FirstName, user.Role.ToString());
+        var token = _jwt.GenerateToken(user.Guid, user.Email, user.Rolee.ToString());
+        return new AuthResponse(token, user.Guid, user.Email, user.FirstName, user.Rolee.ToString());
     }
 
     public async Task<AuthResponse> LoginAsync(LoginRequest request, CancellationToken ct = default)
@@ -50,7 +50,7 @@ public class AuthService
         if (!user.IsActive)
             throw new UnauthorizedAccessException("Account is disabled.");
 
-        var token = _jwt.GenerateToken(user.Guid, user.Email, user.Role.ToString());
-        return new AuthResponse(token, user.Guid, user.Email, user.FirstName, user.Role.ToString());
+        var token = _jwt.GenerateToken(user.Guid, user.Email, user.Rolee.ToString());
+        return new AuthResponse(token, user.Guid, user.Email, user.FirstName, user.Rolee.ToString());
     }
 }

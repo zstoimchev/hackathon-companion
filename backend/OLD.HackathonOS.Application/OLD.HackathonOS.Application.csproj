@@ -8,11 +8,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\OLD.HackathonOS.Domain\OLD.HackathonOS.Domain.csproj" />
+      <PackageReference Include="BCrypt.Net-Next" Version="4.1.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="BCrypt.Net-Next" Version="4.1.0" />
+      <ProjectReference Include="..\OLD.HackathonOS.Domain\OLD.HackathonOS.Domain.csproj" />
     </ItemGroup>
 
 </Project>

@@ -6,7 +6,7 @@ public class EventJudge : BaseEntity
     public Event Event { get; set; } = null!;
 
     public Guid JudgeId { get; set; }
-    public User Judge { get; set; } = null!;
+    public Userr Judge { get; set; } = null!;
 
     /// <summary>
     /// Optional weight multiplier for this judge's scores within the event.

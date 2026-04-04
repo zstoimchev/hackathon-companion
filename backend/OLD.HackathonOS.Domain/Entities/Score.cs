@@ -3,7 +3,7 @@ namespace HackathonOS.Domain.Entities;
 public class Score : BaseEntity
 {
     public Guid JudgeId { get; set; }
-    public User Judge { get; set; } = null!;
+    public Userr Judge { get; set; } = null!;
 
     public Guid TeamId { get; set; }
     public Team Team { get; set; } = null!;
