@@ -1,6 +1,6 @@
 namespace HackathonOS.Application.Interfaces;
 
-public class IJwtService
+public class IUserService
 {
     
 }
