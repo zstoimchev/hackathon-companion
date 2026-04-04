@@ -10,7 +10,7 @@ public class ScoringEngineTests
     {
         var evt = new Event
         {
-            Id = Guid.NewGuid(),
+            Guid = Guid.NewGuid(),
             Name = "Test Event",
             StartDate = DateTime.UtcNow,
             EndDate = DateTime.UtcNow.AddDays(1)
@@ -18,7 +18,7 @@ public class ScoringEngineTests
 
         foreach (var (id, name, weight) in criteria)
         {
-            evt.Criteria.Add(new Criterion { Id = id, EventId = evt.Id, Name = name, Weight = weight });
+            evt.Criteria.Add(new Criterion { Guid = id, EventId = evt.Guid, Name = name, Weight = weight });
         }
 
         return evt;
@@ -26,13 +26,13 @@ public class ScoringEngineTests
 
     private static Team AddTeam(Event evt, string name)
     {
-        var team = new Team { Id = Guid.NewGuid(), EventId = evt.Id, Name = name };
+        var team = new Team { Guid = Guid.NewGuid(), EventId = evt.Guid, Name = name };
         evt.Teams.Add(team);
         return team;
     }
 
     private static Score MakeScore(Guid judgeId, Team team, Criterion criterion, double value)
-        => new() { JudgeId = judgeId, TeamId = team.Id, CriterionId = criterion.Id, Value = value };
+        => new() { JudgeId = judgeId, TeamId = team.Guid, CriterionId = criterion.Guid, Value = value };
 
     [Fact]
     public void EmptyScores_ReturnsEmptyRankings()
@@ -138,8 +138,8 @@ public class ScoringEngineTests
         var implId = Guid.NewGuid();
         // Impact 70%, Implementation 30%
         var evt = BuildEvent((impactId, "Impact", 0.7), (implId, "Implementation", 0.3));
-        var impact = evt.Criteria.First(c => c.Id == impactId);
-        var impl = evt.Criteria.First(c => c.Id == implId);
+        var impact = evt.Criteria.First(c => c.Guid == impactId);
+        var impl = evt.Criteria.First(c => c.Guid == implId);
 
         var teamA = AddTeam(evt, "Alpha");
         var teamB = AddTeam(evt, "Beta");
@@ -187,8 +187,8 @@ public class ScoringEngineTests
 
         var eventJudges = new List<EventJudge>
         {
-            new() { JudgeId = heavyJudge, EventId = evt.Id, Weight = 2.0 },
-            new() { JudgeId = lightJudge, EventId = evt.Id, Weight = 0.5 }
+            new() { JudgeId = heavyJudge, EventId = evt.Guid, Weight = 2.0 },
+            new() { JudgeId = lightJudge, EventId = evt.Guid, Weight = 0.5 }
         };
 
         var result = ScoringEngine.ComputeResults(evt, scores, eventJudges);

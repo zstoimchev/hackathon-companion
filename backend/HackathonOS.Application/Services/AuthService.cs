@@ -1,56 +1,23 @@
-using HackathonOS.Application.DTOs.Auth;
+using HackathonOS.Application.DTOs;
 using HackathonOS.Application.Interfaces;
-using HackathonOS.Domain.Entities;
-using HackathonOS.Domain.Enums;
+using HackathonOS.Repositories;
 
 namespace HackathonOS.Application.Services;
 
-public class AuthService
+public class AuthService(
+    IUserRepository userRepository,
+    IJwtService jwtService) : IAuthService
 {
-    private readonly IUserRepository _users;
-    private readonly IJwtService _jwt;
+    private readonly IUserRepository _userRepository = userRepository;
+    private readonly IJwtService _jwtService = jwtService;
 
-    public AuthService(IUserRepository users, IJwtService jwt)
+    public Task<AuthResponse> LoginAsync(AuthRequest authRequest, CancellationToken ct = default)
     {
-        _users = users;
-        _jwt = jwt;
+        throw new NotImplementedException();
     }
 
-    public async Task<AuthResponse> RegisterAsync(RegisterRequest request, CancellationToken ct = default)
+    public Task LogoutAsync(string token, CancellationToken ct = default)
     {
-        if (await _users.ExistsByEmailAsync(request.Email, ct))
-            throw new InvalidOperationException("Email already registered.");
-
-        if (!Enum.TryParse<UserRole>(request.Role, ignoreCase: true, out var role))
-            throw new ArgumentException($"Invalid role: {request.Role}");
-
-        var user = new User
-        {
-            Email = request.Email.ToLowerInvariant(),
-            Name = request.Name,
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
-            Role = role
-        };
-
-        await _users.AddAsync(user, ct);
-        await _users.SaveChangesAsync(ct);
-
-        var token = _jwt.GenerateToken(user.Id, user.Email, user.Role.ToString());
-        return new AuthResponse(token, user.Id, user.Email, user.Name, user.Role.ToString());
-    }
-
-    public async Task<AuthResponse> LoginAsync(LoginRequest request, CancellationToken ct = default)
-    {
-        var user = await _users.GetByEmailAsync(request.Email.ToLowerInvariant(), ct)
-            ?? throw new UnauthorizedAccessException("Invalid credentials.");
-
-        if (!BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
-            throw new UnauthorizedAccessException("Invalid credentials.");
-
-        if (!user.IsActive)
-            throw new UnauthorizedAccessException("Account is disabled.");
-
-        var token = _jwt.GenerateToken(user.Id, user.Email, user.Role.ToString());
-        return new AuthResponse(token, user.Id, user.Email, user.Name, user.Role.ToString());
+        throw new NotImplementedException();
     }
 }

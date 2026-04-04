@@ -4,11 +4,15 @@
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <RootNamespace>HackathonOS.Application</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\HackathonOS.Domain\HackathonOS.Domain.csproj" />
-      <ProjectReference Include="..\HackathonOS.Architecture\HackathonOS.Architecture.csproj" />
+      <ProjectReference Include="..\OLD.HackathonOS.Domain\OLD.HackathonOS.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="BCrypt.Net-Next" Version="4.1.0" />
     </ItemGroup>
 
 </Project>

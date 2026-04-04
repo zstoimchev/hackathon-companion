@@ -10,4 +10,6 @@ public class User : BaseEntity
     public string PasswordHash { get; set; } = string.Empty;
     public UserRole Role { get; set; }
     public bool IsActive { get; set; } = true;
+    
+    // todo: need a team?
 }

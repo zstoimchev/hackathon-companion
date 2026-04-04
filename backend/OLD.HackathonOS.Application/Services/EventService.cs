@@ -53,7 +53,7 @@ public class EventService
         evt.EndDate = request.EndDate;
         evt.IsActive = request.IsActive;
         evt.LeaderboardVisible = request.LeaderboardVisible;
-        evt.UpdatedAt = DateTime.UtcNow;
+        evt.UpdatedOnUtc = DateTime.UtcNow;
 
         _events.Update(evt);
         await _events.SaveChangesAsync(ct);
@@ -110,8 +110,8 @@ public class EventService
     }
 
     private static EventResponse MapToResponse(Event e) => new(
-        e.Id, e.Name, e.Description,
+        e.Guid, e.Name, e.Description,
         e.StartDate, e.EndDate,
         e.IsActive, e.LeaderboardVisible,
-        e.CreatedAt);
+        e.CreatedOnUtc);
 }

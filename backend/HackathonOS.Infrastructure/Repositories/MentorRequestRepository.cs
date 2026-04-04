@@ -16,7 +16,7 @@ public class MentorRequestRepository : Repository<MentorRequest>, IMentorRequest
             .Include(mr => mr.AssignedMentor)
             .Where(mr => mr.EventId == eventId)
             .OrderByDescending(mr => mr.Priority)
-            .ThenBy(mr => mr.CreatedAt)
+            .ThenBy(mr => mr.CreatedOnUtc)
             .ToListAsync(ct);
 
     public async Task<IEnumerable<MentorRequest>> GetWaitingAsync(Guid eventId, CancellationToken ct = default)
@@ -24,7 +24,7 @@ public class MentorRequestRepository : Repository<MentorRequest>, IMentorRequest
             .Include(mr => mr.Team)
             .Where(mr => mr.EventId == eventId && mr.Status == MentorRequestStatus.Waiting)
             .OrderByDescending(mr => mr.Priority)
-            .ThenBy(mr => mr.CreatedAt)
+            .ThenBy(mr => mr.CreatedOnUtc)
             .ToListAsync(ct);
 
     public async Task<IEnumerable<MentorRequest>> GetByMentorAsync(Guid mentorId, CancellationToken ct = default)
