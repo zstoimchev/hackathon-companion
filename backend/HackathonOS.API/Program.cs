@@ -1,35 +1,22 @@
 using System.Text;
+using HackathonOS.Application.Interfaces;
+using HackathonOS.Application.Services;
+using HackathonOS.Domain.Entities;
+using HackathonOS.Infrastructure.UserPersistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ─── Database ────────────────────────────────────────────────────────────────
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' is not configured.");
-
-// builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
-
 // ─── Repositories ────────────────────────────────────────────────────────────
-// builder.Services.AddScoped<IUserRepository, UserRepository>();
-// builder.Services.AddScoped<IEventRepository, EventRepository>();
-// builder.Services.AddScoped<IScoreRepository, ScoreRepository>();
-// builder.Services.AddScoped<IMentorRequestRepository, MentorRequestRepository>();
-// builder.Services.AddScoped<IRepository<Team>, Repository<Team>>();
-// builder.Services.AddScoped<IRepository<Criterion>, Repository<Criterion>>();
+builder.Services.AddTransient<IUserRepository, UserRepositoryClient>();
 
 // ─── Application Services ────────────────────────────────────────────────────
-// builder.Services.AddScoped<IJwtService, JwtService>();
-// builder.Services.AddScoped<AuthService>();
-// builder.Services.AddScoped<EventService>();
-// builder.Services.AddScoped<TeamService>();
-// builder.Services.AddScoped<CriterionService>();
-// builder.Services.AddScoped<ScoreService>();
-// builder.Services.AddScoped<MentorRequestService>();
-
-// -- Services
-
+builder.Services.AddTransient<IJwtService, JwtService>();
+builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IAuthService, AuthService>();
+builder.Services.AddTransient<ITeamService, TeamService>();
 
 // ─── JWT Authentication ───────────────────────────────────────────────────────
 var jwtSecret = builder.Configuration["Jwt:Secret"]
@@ -104,13 +91,6 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
-
-// ─── Migrate DB on startup ────────────────────────────────────────────────────
-using (var scope = app.Services.CreateScope())
-// {
-//     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-//     db.Database.Migrate();
-// }
 
 // ─── Middleware ───────────────────────────────────────────────────────────────
 if (app.Environment.IsDevelopment())
