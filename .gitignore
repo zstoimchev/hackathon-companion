@@ -5,3 +5,4 @@ riderModule.iml
 /_ReSharper.Caches/
 HackathonCompanion.sln.DotSettings.user
 *.sln.DotSettings.user
+*logs/

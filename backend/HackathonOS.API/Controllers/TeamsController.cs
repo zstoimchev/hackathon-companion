@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HackathonOS.API.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-[Authorize]
-public class TeamsController(ITeamService teamService) : ControllerBase
+// [ApiController]
+// [Route("api/[controller]")]
+// [Authorize]
+public class TeamsController(ITeamService teamService) : HackathonController
 {
     private readonly ITeamService _teamService = teamService;
 
