@@ -10,7 +10,7 @@ public class UserService(IUserRepository userRepository) : IUserService
     private readonly IUserRepository _userRepository = userRepository;
 
 
-    public Task<UserResponse> CreateAsync(CreateUserRequest request, CancellationToken ct = default)
+    public Task<GdgResult<UserResponse>> CreateAsync(CreateUserRequest request, CancellationToken ct = default)
     {
         throw new NotImplementedException();
     }

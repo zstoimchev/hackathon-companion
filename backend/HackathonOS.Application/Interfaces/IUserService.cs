@@ -5,7 +5,7 @@ namespace HackathonOS.Application.Interfaces;
 
 public interface IUserService
 {
-    Task<UserResponse> CreateAsync(CreateUserRequest request, CancellationToken ct = default);
+    Task<GdgResult<UserResponse>> CreateAsync(CreateUserRequest request, CancellationToken ct = default);
     Task<Paginated<UserResponse>> GetAllAsync(int pageNumber = 0, int pageSize = 100, CancellationToken ct = default);
     Task<UserResponse?> GetByIdAsync(Guid id, CancellationToken ct = default);
     Task<UserResponse?> GetByEmailAsync(string email, CancellationToken ct = default);
