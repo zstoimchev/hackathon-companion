@@ -3,7 +3,7 @@ using HackathonOS.Domain.Entities;
 
 namespace HackathonOS.Infrastructure.UserPersistence;
 
-public class UserRepositorySQL : IUserRepository
+public class UserRepositorySql : IUserRepository
 {
     public Task<User> CreateAsync(User request, CancellationToken ct = default)
     {

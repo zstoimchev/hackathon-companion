@@ -16,7 +16,7 @@ builder.Services.Configure<DatabaseOptions>(builder.Configuration.GetSection("Da
 builder.Services.AddSingleton<ISharedDatabaseUtils, SharedDatabaseUtils>();
 
 // ─── Repositories ────────────────────────────────────────────────────────────
-builder.Services.AddTransient<IUserRepository, UserRepositorySQL>();
+builder.Services.AddTransient<IUserRepository, UserRepositorySql>();
 
 // ─── API ──────────────────────────────────────────────────────────────────────
 builder.Services.AddControllers();
