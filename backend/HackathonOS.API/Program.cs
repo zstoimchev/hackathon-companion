@@ -63,7 +63,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "Hackathon OS API",
+        Title = "Hackathon Companion API",
         Version = "v1",
         Description = "Fair, bias-corrected hackathon judging and mentor management platform"
     });

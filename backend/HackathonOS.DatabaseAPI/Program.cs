@@ -1,59 +1,46 @@
+using HackathonOS.Domain.Configurations;
+using HackathonOS.Infrastructure;
+using HackathonOS.Infrastructure.UserPersistence;
+using Microsoft.OpenApi.Models;
+using Serilog;
+
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
+    loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration));
+
+// ─── Configuration ───────────────────────────────────────────────────────────
+builder.Services.Configure<DatabaseOptions>(builder.Configuration.GetSection("Database"));
 
 // ─── Database ────────────────────────────────────────────────────────────────
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-                       ?? throw new InvalidOperationException("Connection string 'DefaultConnection' is not configured.");
+builder.Services.AddSingleton<ISharedDatabaseUtils, SharedDatabaseUtils>();
 
-// builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
+// ─── Repositories ────────────────────────────────────────────────────────────
+builder.Services.AddTransient<IUserRepository, UserRepositorySQL>();
 
-
-
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+// ─── API ──────────────────────────────────────────────────────────────────────
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Hackathon Companion DatabaseAPI",
+        Version = "v1",
+        Description = "Fair, bias-corrected hackathon judging and mentor management platform (Data Access)"
+    });
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// ─── Middleware ───────────────────────────────────────────────────────────────
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hackathon OS v1"));
 }
 
 app.UseHttpsRedirection();
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
-
-
-// ─── Migrate DB on startup ────────────────────────────────────────────────────
-using (var scope = app.Services.CreateScope())
-// {
-//     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-//     db.Database.Migrate();
-// }
-
+app.MapControllers();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
