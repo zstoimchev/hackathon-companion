@@ -43,4 +43,13 @@ public class SharedDatabaseUtils : ISharedDatabaseUtils
             _ => throw new NotSupportedException($"Unsupported database: {_provider}")
         };
     }
+
+    public void ConfigureForDatabase(ref string sql)
+    {
+        sql += _provider switch
+        {
+            DatabaseProvider.Postgres => " RETURNING id;",
+            _ => throw new NotSupportedException($"Unsupported database provider: {_provider}")
+        };
+    }
 }

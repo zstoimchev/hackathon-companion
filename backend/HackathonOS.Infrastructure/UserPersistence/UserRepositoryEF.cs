@@ -6,7 +6,7 @@ namespace HackathonOS.Infrastructure.UserPersistence;
 
 public class UserRepositoryEf(AppDbContext dbContext) : IUserRepository
 {
-    public async Task<User> CreateAsync(User request, CancellationToken ct = default)
+    public async Task<User?> CreateAsync(User request, CancellationToken ct = default)
     {
         await dbContext.Users.AddAsync(request, ct);
         await dbContext.SaveChangesAsync(ct);
@@ -34,10 +34,10 @@ public class UserRepositoryEf(AppDbContext dbContext) : IUserRepository
         };
     }
 
-    public async Task<User?> GetByIdAsync(Guid id, CancellationToken ct = default)
+    public async Task<User?> GetByIdAsync(int id, CancellationToken ct = default)
     {
         return await dbContext.Users
-            .FirstOrDefaultAsync(x => x.Guid == id, ct);
+            .FirstOrDefaultAsync(x => x.Id == id, ct);
     }
 
     public async Task<User?> GetByEmailAsync(string email, CancellationToken ct = default)
@@ -46,10 +46,10 @@ public class UserRepositoryEf(AppDbContext dbContext) : IUserRepository
             .FirstOrDefaultAsync(x => x.Email == email, ct);
     }
 
-    public async Task<User> UpdateAsync(Guid id, User request, CancellationToken ct = default)
+    public async Task<User?> UpdateAsync(int id, User request, CancellationToken ct = default)
     {
         var existing = await dbContext.Users
-            .FirstOrDefaultAsync(x => x.Guid == id, ct);
+            .FirstOrDefaultAsync(x => x.Id == id, ct);
 
         if (existing == null)
             throw new KeyNotFoundException("User not found");
@@ -66,10 +66,10 @@ public class UserRepositoryEf(AppDbContext dbContext) : IUserRepository
         return existing;
     }
 
-    public async Task<bool> DeleteAsync(Guid id, CancellationToken ct = default)
+    public async Task<bool> DeleteAsync(int id, CancellationToken ct = default)
     {
         var existing = await dbContext.Users
-            .FirstOrDefaultAsync(x => x.Guid == id, ct);
+            .FirstOrDefaultAsync(x => x.Id == id, ct);
 
         if (existing == null)
             return false;

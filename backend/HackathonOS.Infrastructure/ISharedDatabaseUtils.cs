@@ -5,4 +5,5 @@ namespace HackathonOS.Infrastructure;
 public interface ISharedDatabaseUtils
 {
     public IDbConnection CreateConnection();
+    void ConfigureForDatabase(ref string sql);
 }
