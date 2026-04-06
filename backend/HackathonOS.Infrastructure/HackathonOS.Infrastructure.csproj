@@ -10,4 +10,12 @@
       <ProjectReference Include="..\HackathonOS.Domain\HackathonOS.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Dapper" Version="2.1.72" />
+      <PackageReference Include="EFCore.BulkExtensions.PostgreSql" Version="10.0.1" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5" />
+      <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.5" />
+      <PackageReference Include="Npgsql" Version="10.0.2" />
+    </ItemGroup>
+
 </Project>

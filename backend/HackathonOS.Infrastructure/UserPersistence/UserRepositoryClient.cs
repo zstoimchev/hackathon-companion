@@ -5,7 +5,7 @@ namespace HackathonOS.Infrastructure.UserPersistence;
 
 public class UserRepositoryClient : IUserRepository
 {
-    public Task<User> CreateAsync(User request, CancellationToken ct = default)
+    public Task<User?> CreateAsync(User request, CancellationToken ct = default)
     {
         throw new NotImplementedException();
     }
@@ -15,7 +15,7 @@ public class UserRepositoryClient : IUserRepository
         throw new NotImplementedException();
     }
 
-    public Task<User?> GetByIdAsync(Guid id, CancellationToken ct = default)
+    public Task<User?> GetByIdAsync(int id, CancellationToken ct = default)
     {
         throw new NotImplementedException();
     }
@@ -25,12 +25,12 @@ public class UserRepositoryClient : IUserRepository
         throw new NotImplementedException();
     }
 
-    public Task<User> UpdateAsync(Guid id, User request, CancellationToken ct = default)
+    public Task<User?> UpdateAsync(int id, User request, CancellationToken ct = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<bool> DeleteAsync(Guid id, CancellationToken ct = default)
+    public Task<bool> DeleteAsync(int id, CancellationToken ct = default)
     {
         throw new NotImplementedException();
     }
