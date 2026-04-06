@@ -21,6 +21,14 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services.AddTransient<ITeamService, TeamService>();
 
+// ─── HTTP Clients ────────────────────────────────────────────────────────────
+builder.Services.AddHttpClient("HackathonOS.DatabaseAPI", client =>
+{
+    var baseUrl = builder.Configuration["Clients:DatabaseApi:BaseUrl"] ??
+                  throw new InvalidOperationException("Missing DatabaseApi BaseUrl");
+    client.BaseAddress = new Uri(baseUrl);
+});
+
 // ─── JWT Authentication ───────────────────────────────────────────────────────
 builder.Services.AddJwtAuthentication(builder.Configuration);
 

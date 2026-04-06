@@ -34,10 +34,10 @@ public class UserRepositoryEf(AppDbContext dbContext)
         };
     }
 
-    public async Task<User?> GetUserDetailsAsync(int id, CancellationToken ct = default)
+    public async Task<User?> GetUserDetailsAsync(Guid id, CancellationToken ct = default)
     {
         return await dbContext.Users
-            .FirstOrDefaultAsync(x => x.Id == id, ct);
+            .FirstOrDefaultAsync(x => x.Guid == id, ct);
     }
 
     public async Task<User?> GetUserDetailsAsync(string email, CancellationToken ct = default)
@@ -66,10 +66,10 @@ public class UserRepositoryEf(AppDbContext dbContext)
         return existing;
     }
 
-    public async Task<bool> DeleteUserAsync(int id, CancellationToken ct = default)
+    public async Task<bool> DeleteUserAsync(Guid id, CancellationToken ct = default)
     {
         var existing = await dbContext.Users
-            .FirstOrDefaultAsync(x => x.Id == id, ct);
+            .FirstOrDefaultAsync(x => x.Guid == id, ct);
 
         if (existing == null)
             return false;

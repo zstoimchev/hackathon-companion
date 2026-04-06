@@ -1,39 +1,83 @@
+using System.Net.Http.Json;
+using System.Text.Json;
 using HackathonOS.Domain;
 using HackathonOS.Domain.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace HackathonOS.Infrastructure.UserPersistence;
 
-public class UserRepositoryClient : IUserRepository
+public class UserRepositoryClient(
+    ILoggerFactory loggerFactory,
+    IHttpClientFactory httpClientFactory) : IUserRepository
 {
-    private const string ClientName = "client";
-    
-    public Task<User?> CreateUserAsync(User request, CancellationToken ct = default)
+    private readonly ILogger _logger = loggerFactory.CreateLogger<UserRepositoryClient>();
+    private readonly HttpClient _client = httpClientFactory.CreateClient("HackathonOS.DatabaseAPI");
+    private const string RequestUri = "api/users";
+
+    private readonly JsonSerializerOptions _jsonOptions = new()
     {
-        throw new NotImplementedException();
+        PropertyNameCaseInsensitive = true
+    };
+
+    public async Task<User?> CreateUserAsync(
+        User request,
+        CancellationToken ct = default)
+    {
+        var response = await _client.PostAsJsonAsync(RequestUri, request, ct);
+        var rawUser = await response.Content.ReadAsStringAsync(ct);
+        return JsonSerializer.Deserialize<User>(rawUser, _jsonOptions);
     }
 
-    public Task<Paginated<User>> GetAllUsersAsync(int pageNumber = 0, int pageSize = 100, CancellationToken ct = default)
+    public async Task<Paginated<User>> GetAllUsersAsync(
+        int pageNumber = 0,
+        int pageSize = 100,
+        CancellationToken ct = default)
     {
-        throw new NotImplementedException();
+        var response = await _client.GetAsync($"{RequestUri}?pageNumber={pageNumber}&pageSize={pageSize}", ct);
+        response.EnsureSuccessStatusCode();
+        var rawUser = await response.Content.ReadAsStringAsync(ct);
+        return JsonSerializer.Deserialize<Paginated<User>>(rawUser, _jsonOptions)!;
     }
 
-    public Task<User?> GetUserDetailsAsync(Guid id, CancellationToken ct = default)
+    public async Task<User?> GetUserDetailsAsync(
+        Guid id,
+        CancellationToken ct = default)
     {
-        throw new NotImplementedException();
+        var response = await _client.GetAsync($"{RequestUri}/{id}", ct);
+        var rawUser = await response.Content.ReadAsStringAsync(ct);
+        return response.IsSuccessStatusCode
+            ? JsonSerializer.Deserialize<User>(rawUser, _jsonOptions)
+            : null;
     }
 
-    public Task<User?> GetUserDetailsAsync(string email, CancellationToken ct = default)
+    public async Task<User?> GetUserDetailsAsync(
+        string email,
+        CancellationToken ct = default)
     {
-        throw new NotImplementedException();
+        var response = await _client.GetAsync($"{RequestUri}/{email}", ct);
+        var rawUser = await response.Content.ReadAsStringAsync(ct);
+        return response.IsSuccessStatusCode
+            ? JsonSerializer.Deserialize<User>(rawUser, _jsonOptions)
+            : null;
     }
 
-    public Task<User?> UpdateUserAsync(int id, User request, CancellationToken ct = default)
+    public async Task<User?> UpdateUserAsync(
+        int id,
+        User request,
+        CancellationToken ct = default)
     {
-        throw new NotImplementedException();
+        var response = await _client.PutAsJsonAsync($"{RequestUri}/{id}", request, ct);
+        var rawUser = await response.Content.ReadAsStringAsync(ct);
+        return response.IsSuccessStatusCode
+            ? JsonSerializer.Deserialize<User>(rawUser, _jsonOptions)
+            : null;
     }
 
-    public Task<bool> DeleteUserAsync(Guid guid, CancellationToken ct = default)
+    public async Task<bool> DeleteUserAsync(
+        Guid guid,
+        CancellationToken ct = default)
     {
-        throw new NotImplementedException();
+        var response = await _client.DeleteAsync($"{RequestUri}/{guid}", ct);
+        return response.IsSuccessStatusCode;
     }
 }
