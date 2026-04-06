@@ -4,6 +4,11 @@ using HackathonOS.Infrastructure.UserPersistence;
 using Microsoft.OpenApi.Models;
 using Serilog;
 
+Console.WriteLine("*********************************************************************************************");
+Console.WriteLine("*** Welcome To Hackathon Companion - The OS for running hackathons fairly and efficiently ***");
+Console.WriteLine("*********************************************************************************************");
+Console.WriteLine("");
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
@@ -40,6 +45,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hackathon OS v1"));
 }
 
+app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 app.MapControllers();
 

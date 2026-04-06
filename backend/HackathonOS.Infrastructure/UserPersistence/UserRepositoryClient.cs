@@ -5,6 +5,8 @@ namespace HackathonOS.Infrastructure.UserPersistence;
 
 public class UserRepositoryClient : IUserRepository
 {
+    private const string ClientName = "client";
+    
     public Task<User?> CreateUserAsync(User request, CancellationToken ct = default)
     {
         throw new NotImplementedException();
