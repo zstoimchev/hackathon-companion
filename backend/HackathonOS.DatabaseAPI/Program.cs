@@ -1,6 +1,7 @@
 using HackathonOS.Domain.Configurations;
 using HackathonOS.Infrastructure;
 using HackathonOS.Infrastructure.UserPersistence;
+using HackathonOS.Middleware;
 using HackathonOS.Middleware.Extensions;
 using Serilog;
 
@@ -30,6 +31,7 @@ if (app.Environment.IsDevelopment()) app.UseSwaggerWithAuth();
 
 app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.MapControllers();
 
 app.Run();

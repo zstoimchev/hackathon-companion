@@ -2,6 +2,7 @@ using HackathonOS.Application.Interfaces;
 using HackathonOS.Application.Mappings;
 using HackathonOS.Application.Services;
 using HackathonOS.Infrastructure.UserPersistence;
+using HackathonOS.Middleware;
 using HackathonOS.Middleware.Extensions;
 using Serilog;
 
@@ -49,6 +50,7 @@ app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 app.UseCorsPolicy();
 app.UseJwtAuthentication();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.MapControllers();
 
 app.Run();
