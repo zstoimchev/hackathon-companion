@@ -13,7 +13,7 @@ public class UsersController(IUserRepository userRepository) : ControllerBase
         User user,
         CancellationToken ct = default)
     {
-        var created = await userRepository.CreateAsync(user, ct);
+        var created = await userRepository.CreateUserAsync(user, ct);
         return created is null ? Conflict() : Ok(created);
     }
 
@@ -23,16 +23,16 @@ public class UsersController(IUserRepository userRepository) : ControllerBase
         [FromQuery] int pageSize = 100,
         CancellationToken ct = default)
     {
-        var user = await userRepository.GetAllAsync(pageNumber, pageSize, ct);
+        var user = await userRepository.GetAllUsersAsync(pageNumber, pageSize, ct);
         return Ok(user);
     }
 
     [HttpGet("{id:int}")]
     public async Task<ActionResult<User>> GetUserAsync(
-        int id,
+        Guid guid,
         CancellationToken ct = default)
     {
-        var user = await userRepository.GetByIdAsync(id, ct);
+        var user = await userRepository.GetUserDetailsAsync(guid, ct);
         return user is null ? NotFound() : Ok(user);
     }
 
@@ -41,7 +41,7 @@ public class UsersController(IUserRepository userRepository) : ControllerBase
         string email,
         CancellationToken ct = default)
     {
-        var user = await userRepository.GetByEmailAsync(email, ct);
+        var user = await userRepository.GetUserDetailsAsync(email, ct);
         return user is null ? NotFound() : Ok(user);
     }
 
@@ -51,16 +51,16 @@ public class UsersController(IUserRepository userRepository) : ControllerBase
         User user,
         CancellationToken ct = default)
     {
-        var updated = await userRepository.UpdateAsync(id, user, ct);
+        var updated = await userRepository.UpdateUserAsync(id, user, ct);
         return updated == null ? Conflict() : Ok(user);
     }
 
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteUserAsync(
-        int id,
+        Guid guid,
         CancellationToken ct = default)
     {
-        var deleted = await userRepository.DeleteAsync(id, ct);
+        var deleted = await userRepository.DeleteUserAsync(guid, ct);
         return deleted ? NoContent() : NotFound();
     }
 }

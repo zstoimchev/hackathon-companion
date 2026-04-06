@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HackathonOS.Infrastructure.UserPersistence;
 
-public class UserRepositoryEf(AppDbContext dbContext) : IUserRepository
+public class UserRepositoryEf(AppDbContext dbContext)
 {
-    public async Task<User?> CreateAsync(User request, CancellationToken ct = default)
+    public async Task<User?> CreateUserAsync(User request, CancellationToken ct = default)
     {
         await dbContext.Users.AddAsync(request, ct);
         await dbContext.SaveChangesAsync(ct);
@@ -14,7 +14,7 @@ public class UserRepositoryEf(AppDbContext dbContext) : IUserRepository
         return request;
     }
 
-    public async Task<Paginated<User>> GetAllAsync(int pageNumber = 0, int pageSize = 100, CancellationToken ct = default)
+    public async Task<Paginated<User>> GetAllUsersAsync(int pageNumber = 0, int pageSize = 100, CancellationToken ct = default)
     {
         var query = dbContext.Users.AsNoTracking();
 
@@ -34,19 +34,19 @@ public class UserRepositoryEf(AppDbContext dbContext) : IUserRepository
         };
     }
 
-    public async Task<User?> GetByIdAsync(int id, CancellationToken ct = default)
+    public async Task<User?> GetUserDetailsAsync(int id, CancellationToken ct = default)
     {
         return await dbContext.Users
             .FirstOrDefaultAsync(x => x.Id == id, ct);
     }
 
-    public async Task<User?> GetByEmailAsync(string email, CancellationToken ct = default)
+    public async Task<User?> GetUserDetailsAsync(string email, CancellationToken ct = default)
     {
         return await dbContext.Users
             .FirstOrDefaultAsync(x => x.Email == email, ct);
     }
 
-    public async Task<User?> UpdateAsync(int id, User request, CancellationToken ct = default)
+    public async Task<User?> UpdateUserAsync(int id, User request, CancellationToken ct = default)
     {
         var existing = await dbContext.Users
             .FirstOrDefaultAsync(x => x.Id == id, ct);
@@ -66,7 +66,7 @@ public class UserRepositoryEf(AppDbContext dbContext) : IUserRepository
         return existing;
     }
 
-    public async Task<bool> DeleteAsync(int id, CancellationToken ct = default)
+    public async Task<bool> DeleteUserAsync(int id, CancellationToken ct = default)
     {
         var existing = await dbContext.Users
             .FirstOrDefaultAsync(x => x.Id == id, ct);

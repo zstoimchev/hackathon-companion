@@ -6,7 +6,7 @@ namespace HackathonOS.Infrastructure.UserPersistence;
 
 public class UserRepositorySql(ISharedDatabaseUtils utils) : IUserRepository
 {
-    public async Task<User?> CreateAsync(User request, CancellationToken ct = default)
+    public async Task<User?> CreateUserAsync(User request, CancellationToken ct = default)
     {
         using var connection = utils.CreateConnection();
 
@@ -48,27 +48,27 @@ public class UserRepositorySql(ISharedDatabaseUtils utils) : IUserRepository
         return insertedId > 0 ? request : null;
     }
 
-    public Task<Paginated<User>> GetAllAsync(int pageNumber = 0, int pageSize = 100, CancellationToken ct = default)
+    public Task<Paginated<User>> GetAllUsersAsync(int pageNumber = 0, int pageSize = 100, CancellationToken ct = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<User?> GetByIdAsync(int id, CancellationToken ct = default)
+    public Task<User?> GetUserDetailsAsync(Guid id, CancellationToken ct = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<User?> GetByEmailAsync(string email, CancellationToken ct = default)
+    public Task<User?> GetUserDetailsAsync(string email, CancellationToken ct = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<User?> UpdateAsync(int id, User request, CancellationToken ct = default)
+    public Task<User?> UpdateUserAsync(int id, User request, CancellationToken ct = default)
     {
         throw new NotImplementedException();
     }
 
-    public Task<bool> DeleteAsync(int id, CancellationToken ct = default)
+    public Task<bool> DeleteUserAsync(Guid guid, CancellationToken ct = default)
     {
         throw new NotImplementedException();
     }

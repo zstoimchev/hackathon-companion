@@ -5,10 +5,10 @@ namespace HackathonOS.Infrastructure.UserPersistence;
 
 public interface IUserRepository
 {
-    Task<User?> CreateAsync(User request, CancellationToken ct = default);
-    Task<Paginated<User>> GetAllAsync(int pageNumber = 0, int pageSize = 100, CancellationToken ct = default);
-    Task<User?> GetByIdAsync(int id, CancellationToken ct = default);
-    Task<User?> GetByEmailAsync(string email, CancellationToken ct = default);
-    Task<User?> UpdateAsync(int id, User request, CancellationToken ct = default);
-    Task<bool> DeleteAsync(int id, CancellationToken ct = default);
+    Task<User?> CreateUserAsync(User request, CancellationToken ct = default);
+    Task<Paginated<User>> GetAllUsersAsync(int pageNumber = 0, int pageSize = 100, CancellationToken ct = default);
+    Task<User?> GetUserDetailsAsync(Guid id, CancellationToken ct = default);
+    Task<User?> GetUserDetailsAsync(string email, CancellationToken ct = default);
+    Task<User?> UpdateUserAsync(int id, User request, CancellationToken ct = default);
+    Task<bool> DeleteUserAsync(Guid guid, CancellationToken ct = default);
 }
