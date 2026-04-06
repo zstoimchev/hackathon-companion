@@ -25,17 +25,7 @@ builder.Services.AddTransient<ITeamService, TeamService>();
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
 // ─── CORS ─────────────────────────────────────────────────────────────────────
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(policy =>
-    {
-        var origins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>()
-                      ?? ["http://localhost:3000"];
-        policy.WithOrigins(origins)
-            .AllowAnyHeader()
-            .AllowAnyMethod();
-    });
-});
+builder.Services.AddCorsPolicy(builder.Configuration);
 
 // ─── API ──────────────────────────────────────────────────────────────────────
 builder.Services.AddControllers();
@@ -49,7 +39,7 @@ if (app.Environment.IsDevelopment()) app.UseSwaggerWithAuth();
 
 app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
-app.UseCors();
+app.UseCorsPolicy();
 app.UseJwtAuthentication();
 app.MapControllers();
 
