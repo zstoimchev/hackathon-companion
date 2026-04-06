@@ -54,7 +54,7 @@ public class UserRepositoryClient(
         string email,
         CancellationToken ct = default)
     {
-        var response = await _client.GetAsync($"{RequestUri}/{email}", ct);
+        var response = await _client.GetAsync($"{RequestUri}/email/{email}", ct);
         var rawUser = await response.Content.ReadAsStringAsync(ct);
         return response.IsSuccessStatusCode
             ? JsonSerializer.Deserialize<User>(rawUser, _jsonOptions)
@@ -62,11 +62,11 @@ public class UserRepositoryClient(
     }
 
     public async Task<User?> UpdateUserAsync(
-        int id,
+        Guid guid,
         User request,
         CancellationToken ct = default)
     {
-        var response = await _client.PutAsJsonAsync($"{RequestUri}/{id}", request, ct);
+        var response = await _client.PutAsJsonAsync($"{RequestUri}/{guid}", request, ct);
         var rawUser = await response.Content.ReadAsStringAsync(ct);
         return response.IsSuccessStatusCode
             ? JsonSerializer.Deserialize<User>(rawUser, _jsonOptions)

@@ -9,6 +9,6 @@ public interface IUserRepository
     Task<Paginated<User>> GetAllUsersAsync(int pageNumber = 0, int pageSize = 100, CancellationToken ct = default);
     Task<User?> GetUserDetailsAsync(Guid id, CancellationToken ct = default);
     Task<User?> GetUserDetailsAsync(string email, CancellationToken ct = default);
-    Task<User?> UpdateUserAsync(int id, User request, CancellationToken ct = default);
+    Task<User?> UpdateUserAsync(Guid id, User request, CancellationToken ct = default);
     Task<bool> DeleteUserAsync(Guid guid, CancellationToken ct = default);
 }

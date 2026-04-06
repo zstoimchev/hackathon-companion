@@ -63,7 +63,7 @@ public class UserRepositorySql(ISharedDatabaseUtils utils) : IUserRepository
         throw new NotImplementedException();
     }
 
-    public Task<User?> UpdateUserAsync(int id, User request, CancellationToken ct = default)
+    public Task<User?> UpdateUserAsync(Guid guid, User request, CancellationToken ct = default)
     {
         throw new NotImplementedException();
     }

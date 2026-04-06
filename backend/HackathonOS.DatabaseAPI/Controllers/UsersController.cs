@@ -27,8 +27,8 @@ public class UsersController(IUserRepository userRepository) : ControllerBase
         return Ok(user);
     }
 
-    [HttpGet("{id:int}")]
-    public async Task<ActionResult<User>> GetUserAsync(
+    [HttpGet("{guid:guid}")]
+    public async Task<ActionResult<User>> GetUserByGuidAsync(
         Guid guid,
         CancellationToken ct = default)
     {
@@ -36,8 +36,8 @@ public class UsersController(IUserRepository userRepository) : ControllerBase
         return user is null ? NotFound() : Ok(user);
     }
 
-    [HttpGet("{email}")]
-    public async Task<ActionResult<User>> GetUserAsync(
+    [HttpGet("email/{email}")]
+    public async Task<ActionResult<User>> GetUserByEmailAsync(
         string email,
         CancellationToken ct = default)
     {
@@ -45,17 +45,17 @@ public class UsersController(IUserRepository userRepository) : ControllerBase
         return user is null ? NotFound() : Ok(user);
     }
 
-    [HttpPut("{id:int}")]
+    [HttpPut("{guid:guid}")]
     public async Task<ActionResult<User>> UpdateUserAsync(
-        int id, 
+        Guid guid, 
         User user,
         CancellationToken ct = default)
     {
-        var updated = await userRepository.UpdateUserAsync(id, user, ct);
+        var updated = await userRepository.UpdateUserAsync(guid, user, ct);
         return updated == null ? Conflict() : Ok(user);
     }
 
-    [HttpDelete("{id:int}")]
+    [HttpDelete("{guid:guid}")]
     public async Task<IActionResult> DeleteUserAsync(
         Guid guid,
         CancellationToken ct = default)
