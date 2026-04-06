@@ -1,49 +1,32 @@
 using HackathonOS.Domain.Configurations;
 using HackathonOS.Infrastructure;
 using HackathonOS.Infrastructure.UserPersistence;
-using Microsoft.OpenApi.Models;
+using HackathonOS.Middleware.Extensions;
 using Serilog;
-
-Console.WriteLine("*********************************************************************************************");
-Console.WriteLine("*** Welcome To Hackathon Companion - The OS for running hackathons fairly and efficiently ***");
-Console.WriteLine("*********************************************************************************************");
-Console.WriteLine("");
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
     loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration));
 
-// ─── Configuration ───────────────────────────────────────────────────────────
-builder.Services.Configure<DatabaseOptions>(builder.Configuration.GetSection("Database"));
-
-// ─── Database ────────────────────────────────────────────────────────────────
-builder.Services.AddSingleton<ISharedDatabaseUtils, SharedDatabaseUtils>();
-
 // ─── Repositories ────────────────────────────────────────────────────────────
 builder.Services.AddTransient<IUserRepository, UserRepositorySql>();
+
+// ─── Application Services ────────────────────────────────────────────────────
+builder.Services.AddTransient<ISharedDatabaseUtils, SharedDatabaseUtils>();
+
+// ─── Configuration ───────────────────────────────────────────────────────────
+builder.Services.Configure<DatabaseOptions>(builder.Configuration.GetSection("Database"));
 
 // ─── API ──────────────────────────────────────────────────────────────────────
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Title = "Hackathon Companion DatabaseAPI",
-        Version = "v1",
-        Description = "Fair, bias-corrected hackathon judging and mentor management platform (Data Access)"
-    });
-});
+builder.Services.AddSwaggerWithAuth();
 
 var app = builder.Build();
 
 // ─── Middleware ───────────────────────────────────────────────────────────────
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hackathon OS v1"));
-}
+if (app.Environment.IsDevelopment()) app.UseSwaggerWithAuth();
 
 app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();

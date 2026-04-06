@@ -7,7 +7,7 @@ public class DatabaseOptions
     public string DefaultPassword { get; set; } = string.Empty;
 }
 
-public abstract class ConnectionStringsOptions
+public class ConnectionStringsOptions
 {
     public string SqLite { get; set; } = string.Empty;
     public string Postgres { get; set; } = string.Empty;

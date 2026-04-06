@@ -14,6 +14,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\HackathonOS.Infrastructure\HackathonOS.Infrastructure.csproj" />
+        <ProjectReference Include="..\HackathonOS.Middleware\HackathonOS.Middleware.csproj" />
     </ItemGroup>
     
     <ItemGroup>
