@@ -1,5 +1,6 @@
 using System.Text;
 using HackathonOS.Application.Interfaces;
+using HackathonOS.Application.Mappings;
 using HackathonOS.Application.Services;
 using HackathonOS.Infrastructure.UserPersistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -16,6 +17,8 @@ builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
 builder.Services.AddTransient<IUserRepository, UserRepositoryClient>();
 
 // ─── Application Services ────────────────────────────────────────────────────
+builder.Services.AddAutoMapper(_ => { }, typeof(MappingProfile).Assembly);
+builder.Services.AddTransient<IHashingService, HashingService>();
 builder.Services.AddTransient<IJwtService, JwtService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IAuthService, AuthService>();
@@ -23,7 +26,7 @@ builder.Services.AddTransient<ITeamService, TeamService>();
 
 // ─── JWT Authentication ───────────────────────────────────────────────────────
 var jwtSecret = builder.Configuration["Jwt:Secret"]
-    ?? throw new InvalidOperationException("Jwt:Secret is not configured.");
+                ?? throw new InvalidOperationException("Jwt:Secret is not configured.");
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -49,10 +52,10 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(policy =>
     {
         var origins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>()
-            ?? ["http://localhost:3000"];
+                      ?? ["http://localhost:3000"];
         policy.WithOrigins(origins)
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+            .AllowAnyHeader()
+            .AllowAnyMethod();
     });
 });
 
@@ -110,4 +113,6 @@ app.MapControllers();
 
 app.Run();
 
-internal abstract partial class Program { }
+internal abstract partial class Program
+{
+}
