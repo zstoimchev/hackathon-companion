@@ -9,13 +9,11 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        // UserRequest → User
+        // UserRequest -> User
         CreateMap<UserRequest, User>()
-            .ForMember(dest => dest.PasswordHash, opt => opt.Ignore()) // handled by AuthService
-            .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role));
+            .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
 
-        // User → UserResponse
-        CreateMap<User, UserResponse>()
-            .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role.ToString()));
+        // User -> UserResponse
+        CreateMap<User, UserResponse>();
     }
 }

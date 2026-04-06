@@ -22,7 +22,9 @@ public class UserService(
     {
         var result = new GdgResult<UserResponse>();
         if (request.Equals(null)) return result.CreateConflict("Received empty user request.");
-        // first check if the email exists
+        
+        var existing = await userRepository.GetByEmailAsync(request.Email, ct);
+        if (existing != null) return result.CreateConflict("User with that email already exists.");
 
         var userModel = mapper.Map<User>(request);
         userModel.PasswordHash = hashingService.Hash(request.Password);
