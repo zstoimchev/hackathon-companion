@@ -4,6 +4,7 @@
   <Project Path="backend/HackathonOS.Domain/HackathonOS.Domain.csproj" />
   <Project Path="backend\HackathonOS.Application\HackathonOS.Application.csproj" />
   <Project Path="backend\HackathonOS.Infrastructure\HackathonOS.Infrastructure.csproj" />
+  <Project Path="backend/HackathonOS.Middleware/HackathonOS.Middleware.csproj" />
 
   <Project Path="backend/OLD.HackathonOS.Domain/OLD.HackathonOS.Domain.csproj" />
   <Project Path="backend\OLD.HackathonOS.Application\OLD.HackathonOS.Application.csproj" />
