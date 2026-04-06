@@ -1,37 +1,83 @@
 using HackathonOS.Domain;
 using HackathonOS.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace HackathonOS.Infrastructure.UserPersistence;
 
-public class UserRepositoryEF : IUserRepository
+public class UserRepositoryEf(AppDbContext dbContext) : IUserRepository
 {
-    public Task<User> CreateAsync(User request, CancellationToken ct = default)
+    public async Task<User?> CreateAsync(User request, CancellationToken ct = default)
     {
-        throw new NotImplementedException();
+        await dbContext.Users.AddAsync(request, ct);
+        await dbContext.SaveChangesAsync(ct);
+
+        return request;
     }
 
-    public Task<Paginated<User>> GetAllAsync(int pageNumber = 0, int pageSize = 100, CancellationToken ct = default)
+    public async Task<Paginated<User>> GetAllAsync(int pageNumber = 0, int pageSize = 100, CancellationToken ct = default)
     {
-        throw new NotImplementedException();
+        var query = dbContext.Users.AsNoTracking();
+
+        var total = await query.CountAsync(ct);
+
+        var items = await query
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync(ct);
+
+        return new Paginated<User>
+        {
+            Items = items,
+            TotalCount = total,
+            PageNumber = pageNumber,
+            PageSize = pageSize
+        };
     }
 
-    public Task<User?> GetByIdAsync(Guid id, CancellationToken ct = default)
+    public async Task<User?> GetByIdAsync(int id, CancellationToken ct = default)
     {
-        throw new NotImplementedException();
+        return await dbContext.Users
+            .FirstOrDefaultAsync(x => x.Id == id, ct);
     }
 
-    public Task<User?> GetByEmailAsync(string email, CancellationToken ct = default)
+    public async Task<User?> GetByEmailAsync(string email, CancellationToken ct = default)
     {
-        throw new NotImplementedException();
+        return await dbContext.Users
+            .FirstOrDefaultAsync(x => x.Email == email, ct);
     }
 
-    public Task<User> UpdateAsync(Guid id, User request, CancellationToken ct = default)
+    public async Task<User?> UpdateAsync(int id, User request, CancellationToken ct = default)
     {
-        throw new NotImplementedException();
+        var existing = await dbContext.Users
+            .FirstOrDefaultAsync(x => x.Id == id, ct);
+
+        if (existing == null)
+            throw new KeyNotFoundException("User not found");
+
+        // map fields manually (or use AutoMapper)
+        existing.FirstName = request.FirstName;
+        existing.LastName = request.LastName;
+        existing.Email = request.Email;
+        existing.Role = request.Role;
+        existing.IsActive = request.IsActive;
+
+        await dbContext.SaveChangesAsync(ct);
+
+        return existing;
     }
 
-    public Task<bool> DeleteAsync(Guid id, CancellationToken ct = default)
+    public async Task<bool> DeleteAsync(int id, CancellationToken ct = default)
     {
-        throw new NotImplementedException();
+        var existing = await dbContext.Users
+            .FirstOrDefaultAsync(x => x.Id == id, ct);
+
+        if (existing == null)
+            return false;
+
+        dbContext.Users.Remove(existing);
+
+        await dbContext.SaveChangesAsync(ct);
+
+        return true;
     }
 }

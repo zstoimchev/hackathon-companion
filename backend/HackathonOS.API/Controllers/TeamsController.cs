@@ -7,7 +7,7 @@ namespace HackathonOS.API.Controllers;
 // [ApiController]
 // [Route("api/[controller]")]
 // [Authorize]
-public class TeamsController(ITeamService teamService) : HackathonController
+public class TeamsController(ITeamService teamService) : GdgController
 {
     private readonly ITeamService _teamService = teamService;
 

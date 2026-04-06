@@ -2,7 +2,7 @@ using HackathonOS.Domain.Enums;
 
 namespace HackathonOS.Application.DTOs;
 
-public record CreateUserRequest(
+public record UserRequest(
     string FirstName,
     string LastName,
     string Email,
@@ -14,5 +14,5 @@ public record UserResponse(
     string FirstName,
     string LastName,
     string Email,
-    string Role
+    UserRole Role
 );
